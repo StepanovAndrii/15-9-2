@@ -2,6 +2,7 @@
 const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
+const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
 const typescriptErrorRules = require("./.eslint-rules/typescript/error");
 const typescriptWarnRules = require("./.eslint-rules/typescript/warn");
@@ -16,6 +17,7 @@ module.exports = tseslint.config(
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
+      eslintPluginPrettierRecommended
     ],
     processor: angular.processInlineTemplates,
     rules: {
