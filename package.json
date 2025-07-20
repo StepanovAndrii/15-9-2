@@ -13,6 +13,12 @@
         "format:check": "prettier --check \"src/**/*.{ts,js,html,scss,json}\"",
         "prepare": "husky install"
     },
+    "lint-staged": {
+        "*.{ts, js, html}": [
+            "eslint --fix",
+            "prettier --write"
+        ]
+    },
     "private": true,
     "dependencies": {
         "@angular/common": "^19.2.0",
