@@ -1,0 +1,35 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.fields-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-button-toggle-group {
+    width: 100%;
+    display: flex;
+}
+
+.mat-button-toggle {
+    flex-grow: 1;
+}

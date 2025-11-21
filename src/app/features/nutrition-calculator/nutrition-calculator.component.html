@@ -1,1 +1,91 @@
-<p>nutrition-calculator works!</p>
+<div class="wrapper">
+    <form [formGroup]="nutritionCalculatorUserInfoForm" (submit)="submit()">
+        <div class="fields-wrapper">
+            <mat-form-field>
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender" required>
+                    <mat-option value="male">Man</mat-option>
+                    <mat-option value="female">Woman</mat-option>
+                </mat-select>
+                @if(nutritionCalculatorUserInfoForm.get('gender')?.invalid) {
+                    <mat-error>
+                        @if(nutritionCalculatorUserInfoForm.get('gender')?.hasError('required')) {
+                            Please select your gender.
+                        }
+                    </mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Weight</mat-label>
+                <input matInput type="number" formControlName="weight" (keydown)="blockInvalidNumberInput($event)" required>
+                @if(nutritionCalculatorUserInfoForm.get('weight')?.invalid) {
+                    <mat-error>
+                        @if(nutritionCalculatorUserInfoForm.get('weight')?.hasError('required')) {
+                            Please enter your weight.
+                        }
+                        @else if (nutritionCalculatorUserInfoForm.get('weight')?.hasError('isLesser')) {
+                            Weight must be at least {{ nutritionCalculatorUserInfoForm.get('weight')?.getError('isLesser')?.['min'] }} kg.
+                        }
+                        @else if (nutritionCalculatorUserInfoForm.get('weight')?.hasError('isBigger')) {
+                            Weight must not exceed {{ nutritionCalculatorUserInfoForm.get('weight')?.getError('isBigger')?.['max'] }} kg.
+                        }
+                    </mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Height</mat-label>
+                <input matInput type="number" formControlName="height" (keydown)="blockInvalidNumberInput($event)" required>
+                @if(nutritionCalculatorUserInfoForm.get('height')?.invalid) {
+                    <mat-error>
+                        @if(nutritionCalculatorUserInfoForm.get('height')?.hasError('required')) {
+                            Please enter your height.
+                        }
+                        @else if (nutritionCalculatorUserInfoForm.get('height')?.hasError('isLesser')) {
+                            Height must be at least {{ nutritionCalculatorUserInfoForm.get('height')?.getError('isLesser')?.['min'] }} cm.
+                        }
+                        @else if (nutritionCalculatorUserInfoForm.get('height')?.hasError('isBigger')) {
+                            Height must not exceed {{ nutritionCalculatorUserInfoForm.get('height')?.getError('isBigger')?.['max'] }} cm.
+                        }
+                    </mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Age</mat-label>
+                <input matInput type="number" formControlName="age" (keydown)="blockInvalidNumberInput($event)" required>
+                @if(nutritionCalculatorUserInfoForm.get('age')?.invalid) {
+                    <mat-error>
+                        @if(nutritionCalculatorUserInfoForm.get('age')?.hasError('required')) {
+                            Please enter your age.
+                        }
+                        @else if (nutritionCalculatorUserInfoForm.get('age')?.hasError('isLesser')) {
+                            Age must be at least {{ nutritionCalculatorUserInfoForm.get('age')?.getError('isLesser')?.['min'] }} years old.
+                        }
+                        @else if (nutritionCalculatorUserInfoForm.get('age')?.hasError('isBigger')) {
+                            Age must not exceed {{ nutritionCalculatorUserInfoForm.get('age')?.getError('isBigger')?.['max'] }} years old.
+                        }
+                    </mat-error>
+                }
+            </mat-form-field>
+            <mat-button-toggle-group formControlName="activity" class="mat-button-toggle-group" aria-label="Activity">
+                <mat-button-toggle matTooltip="Little or no exercise" class="mat-button-toggle" value="sedentary">Sedentary</mat-button-toggle>
+                <mat-button-toggle matTooltip="1-3 hrs/week, light activity" class="mat-button-toggle" value="lightly">Lightly Active</mat-button-toggle>
+                <mat-button-toggle matTooltip="3-5 hrs/week, moderate exercise" class="mat-button-toggle" value="moderately">Moderately Active</mat-button-toggle>
+                <mat-button-toggle matTooltip="5-7 hrs/week, intense exercise" class="mat-button-toggle" value="veryActive">Very Active</mat-button-toggle>
+                <mat-button-toggle matTooltip="7+ hrs/week or very active job" class="mat-button-toggle" value="extraActive">Extra Active</mat-button-toggle>
+            </mat-button-toggle-group>
+            @if (nutritionCalculatorUserInfoForm.get('activity')?.hasError('required')
+            && nutritionCalculatorUserInfoForm.get('activity')?.touched) {
+                <mat-error>
+                    Please select activity level.
+                </mat-error>
+            }
+        </div>
+        
+        <button matButton="filled" [disabled]="nutritionCalculatorUserInfoForm.invalid" type="submit">Calculate</button>
+    </form>
+    <div>
+        <div></div>
+        <p>TDEE: {{tdee | number:'1.0-0'}}</p>
+        <p>BMR: {{bmr | number:'1.0-0'}}</p>
+    </div>
+</div>
